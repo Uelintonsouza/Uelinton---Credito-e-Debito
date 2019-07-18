@@ -3,6 +3,9 @@ using UelintonBank.Infra.Repositories;
 using RestSharp;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using System;
+using System.Timers;
 
 namespace UelintonBank
 {
@@ -10,12 +13,23 @@ namespace UelintonBank
     {
         public static void Main(string[] args)
         {
-            MainStarter mainStarter = new MainStarter();
+            Initialize();
+        }
 
-            Thread.Sleep(100);
-            Thread thread = new Thread(new ThreadStart(mainStarter.CreditDebit));
+        public static void Initialize()
+        {
+            Thread thread = new Thread(new ThreadStart(new MainStarter().InitializeThreads));
             thread.Start();
         }
+
+        public void InitializeThreads()
+        {
+            Thread.Sleep(10);
+
+            CreditDebit();
+        }
+
+
         public async Task HttpPost(Lancamentos lancamentos)
         {
             var client = new RestClient("https://localhost:44392/api/CreditDebit");
@@ -31,22 +45,30 @@ namespace UelintonBank
             IRestResponse response = await client.ExecuteTaskAsync(request);
         }
 
-        private TransactionRepository _entryAppervice;
-        public async void CreditDebit()
+        private TransactionRepository _entryAppervice = new TransactionRepository();
+        private async void CreditDebit()
         {
-            _entryAppervice = new TransactionRepository();
-
-            var lancamentos = _entryAppervice.GetLancamentos(0);
-
-            if (lancamentos != null)
+            try
             {
-                foreach (Lancamentos item in lancamentos)
+                var lancamentos = _entryAppervice.GetLancamentos(0);
+
+                if (lancamentos != null)
                 {
-                    await HttpPost(item);
+                    foreach (Lancamentos item in lancamentos)
+                    {
+                        await HttpPost(item);
+                    }
                 }
+                else
+                { return; }
+
             }
-            else
-            { return; }
+            catch (Exception)
+            {
+
+                throw;
+            }
+         
         }
     }
 
