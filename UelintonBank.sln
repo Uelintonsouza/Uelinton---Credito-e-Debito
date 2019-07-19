@@ -23,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentatio
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UelintonBankAPI", "UelintonBankAPI\UelintonBankAPI.csproj", "{FA7D110B-1682-4AF9-B406-4F2ADD343217}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UelintonBank.Test", "UelintonBank.Test\UelintonBank.Test.csproj", "{BC61DFE6-884D-4F96-AE0D-F37A9CD5265E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UelintonBank.Test", "UelintonBank.Test\UelintonBank.Test.csproj", "{BC61DFE6-884D-4F96-AE0D-F37A9CD5265E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
